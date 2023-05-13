@@ -7,11 +7,12 @@ export default defineConfig({
   plugins: [
     foundry({
       deployments: {
-        // Counter: {
-        //   [chains.mainnet.id]: "0x1A61839Eb5fC6eBBcAe01eD5E79062E598792Dac",
-        //   [chains.goerli.id]: "0x78991BB1D194C1235fe285240af8489CFA552151",
-        //   [chains.foundry.id]: "0xbe18A1B61ceaF59aEB6A9bC81AB4FB87D56Ba167",
-        // },
+        AboutTimer: {
+          [chains.foundry.id]: "0x8a5592b0E95767886642269AEb0B7A80dAa22c8f",
+        },
+        BOBX: {
+          [chains.foundry.id]: "0x673D41ebC2b499d3545E5a0309124cD94edA3FB0",
+        },
       },
     }),
     react(),
