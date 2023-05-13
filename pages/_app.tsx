@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
 import { arbitrum, goerli, mainnet, optimism, polygon } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
+import Link from "next/link";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
+        <Link href="/">Home</Link>
         <Component {...pageProps} />
       </RainbowKitProvider>
     </WagmiConfig>
