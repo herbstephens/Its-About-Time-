@@ -15,7 +15,7 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 struct Task {
     address buyer;
     address seller;
-    uint96 flowRate;
+    int96 flowRate;
 }
 
 /**
@@ -26,8 +26,8 @@ struct Task {
 @dev User needs to setMaxFlowPermissions in zkBobx for this contract
  */
 contract AboutTimer {
-    event CreatedTask(address indexed buyer, address indexed seller, uint96 flowRate);
-    event FinalizedTask(address indexed buyer, address indexed seller, uint96 flowRate);
+    event CreatedTask(address indexed buyer, address indexed seller, int96 flowRate);
+    event FinalizedTask(address indexed buyer, address indexed seller, int96 flowRate);
 
     /// @notice CFA Library.
     using SuperTokenV1Library for ISuperToken;
@@ -48,7 +48,7 @@ contract AboutTimer {
     // }
 
     // Tasks 2. Create a timer
-    function startTimer(address buyer, bytes calldata buyerSignature, uint256 orderId, uint96 flowRate) external {
+    function startTimer(address buyer, bytes calldata buyerSignature, int96 flowRate) external {
         // verify buyer signature for message 'I agree to order ${orderId} from ${msg.sender} for ${flowRate} and acknolewdge I have read the terms and conditions of It's About Time!'
         require(sellerTask[msg.sender].buyer == address(0), "Seller already has a task");
         require(verifySignature(buyer, flowRate, buyerSignature), "Invalid buyer signature");
@@ -69,7 +69,7 @@ contract AboutTimer {
 
     function verifySignature(
         address signer,
-        uint256 flowRate,
+        int96 flowRate,
         bytes memory signature
     ) public view returns (bool) {
         // Construct the message
