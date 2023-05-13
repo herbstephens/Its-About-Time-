@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {
-    ISuperfluid, 
-    ISuperToken, 
-    ISuperApp
-} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
-
-import { SuperTokenV1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
+import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
@@ -15,30 +9,30 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 struct Task {
     address buyer;
     address seller;
-    int96 flowRate;
+    uint256 maxHours;
+    uint256 weiPerHour;
+    uint256 startTime;
 }
 
 /**
 @title AboutTimer
 @author The It's About Time team
 @notice Allows for the creation of timers that will be calculated based on block timestamps for the start and end event
-@dev User needs to own BOBx for interacting with this contract
-@dev User needs to setMaxFlowPermissions in BOBx for this contract
+@dev User needs to own bob for interacting with this contract
+@dev User needs to setMaxFlowPermissions in bob for this contract
  */
 contract AboutTimer {
-    event CreatedTask(address indexed buyer, address indexed seller, int96 flowRate);
-    event FinalizedTask(address indexed buyer, address indexed seller, int96 flowRate);
+    event CreatedTask(address indexed buyer, address indexed seller, uint256 actualHours, uint256 weiPerHour);
+    event FinalizedTask(address indexed buyer, address indexed seller, uint256 maxHours, uint256 weiPerHour);
 
-    /// @notice CFA Library.
-    using SuperTokenV1Library for ISuperToken;
     using ECDSA for bytes32;
 
 
-    ISuperToken public BOBx;
+    IERC20 public bob;
 
 
-    constructor(ISuperToken BOBx_) {
-        BOBx = BOBx_;
+    constructor(IERC20 bob_) {
+        bob = bob_;
     }
 
     mapping(address => Task) public sellerTask;
@@ -48,13 +42,13 @@ contract AboutTimer {
     // }
 
     // Tasks 2. Create a timer
-    function startTimer(address buyer, bytes calldata buyerSignature, int96 flowRate) external {
-        // verify buyer signature for message 'I agree to order ${orderId} from ${msg.sender} for ${flowRate} and acknolewdge I have read the terms and conditions of It's About Time!'
+    function startTimer(address buyer, bytes calldata buyerSignature, uint256 maxHours, uint256 weiPerHour) external {
+        require(bob.allowance(buyer, address(this)) >= maxHours * weiPerHour, "Buyer has not enough allowance to cover for maxHours");
+        require(bob.balanceOf(buyer) >= maxHours * weiPerHour, "Buyer has not enough balance to cover for maxHours");
         require(sellerTask[msg.sender].buyer == address(0), "Seller already has a task");
-        require(verifySignature(buyer, flowRate, buyerSignature), "Invalid buyer signature");
-        sellerTask[msg.sender] = Task(buyer, msg.sender, flowRate);
-        emit CreatedTask(buyer, msg.sender, flowRate);
-        BOBx.createFlowFrom(buyer, msg.sender, flowRate);
+        require(verifySignature(buyer, buyerSignature, maxHours, weiPerHour), "Invalid buyer signature");
+        sellerTask[msg.sender] = Task(buyer, msg.sender, maxHours, weiPerHour, block.timestamp);
+        emit CreatedTask(buyer, msg.sender, maxHours, weiPerHour);
     }
 
     // Tasks 3. End a timer
@@ -62,22 +56,25 @@ contract AboutTimer {
         Task memory task = sellerTask[msg.sender];
         require(task.buyer != address(0), "Seller does not have a task");
         delete sellerTask[msg.sender];
-        emit FinalizedTask(task.buyer, msg.sender, task.flowRate);
+        emit FinalizedTask(task.buyer, msg.sender, block.timestamp - task.startTime, task.weiPerHour);
+        bob.transferFrom(task.buyer, msg.sender, (block.timestamp - task.startTime) * task.weiPerHour / 1 hours);
         // end time is block.timestamp
-        BOBx.deleteFlow(task.buyer, msg.sender);
     }
 
     function verifySignature(
         address signer,
-        int96 flowRate,
-        bytes memory signature
+        bytes memory signature,
+        uint256 maxHours,
+        uint256 weiPerHour
     ) public view returns (bool) {
         // Construct the message
         bytes32 message = keccak256(abi.encodePacked(
             "I agree to order from ",
             msg.sender,
-            " for ",
-            flowRate,
+            " for a max of ",
+            maxHours,
+            " at a rate of ",
+            weiPerHour,
             " and acknowledge I have read the terms and conditions of It's About Time!"
         ));
 

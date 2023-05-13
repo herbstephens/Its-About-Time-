@@ -8,10 +8,11 @@ export default defineConfig({
     foundry({
       deployments: {
         AboutTimer: {
-          [chains.foundry.id]: "0x8a5592b0E95767886642269AEb0B7A80dAa22c8f",
+          [chains.foundry.id]: "0x9D76393e381FE089950c5bFbDD603f033BfB08c2",
         },
-        BOBX: {
-          [chains.foundry.id]: "0x673D41ebC2b499d3545E5a0309124cD94edA3FB0",
+        ERC20: {
+          [chains.polygon.id]: "0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
+          [chains.foundry.id]: "0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B",
         },
       },
     }),
