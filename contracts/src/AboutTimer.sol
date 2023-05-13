@@ -22,8 +22,8 @@ struct Task {
 @title AboutTimer
 @author The It's About Time team
 @notice Allows for the creation of timers that will be calculated based on block timestamps for the start and end event
-@dev User needs to own zkBobx for interacting with this contract
-@dev User needs to setMaxFlowPermissions in zkBobx for this contract
+@dev User needs to own BOBx for interacting with this contract
+@dev User needs to setMaxFlowPermissions in BOBx for this contract
  */
 contract AboutTimer {
     event CreatedTask(address indexed buyer, address indexed seller, int96 flowRate);
@@ -34,11 +34,11 @@ contract AboutTimer {
     using ECDSA for bytes32;
 
 
-    ISuperToken public zkBobx;
+    ISuperToken public BOBx;
 
 
-    constructor(ISuperToken zkBobx_) {
-        zkBobx = zkBobx_;
+    constructor(ISuperToken BOBx_) {
+        BOBx = BOBx_;
     }
 
     mapping(address => Task) public sellerTask;
@@ -54,7 +54,7 @@ contract AboutTimer {
         require(verifySignature(buyer, flowRate, buyerSignature), "Invalid buyer signature");
         sellerTask[msg.sender] = Task(buyer, msg.sender, flowRate);
         emit CreatedTask(buyer, msg.sender, flowRate);
-        zkBobx.createFlowFrom(buyer, msg.sender, flowRate);
+        BOBx.createFlowFrom(buyer, msg.sender, flowRate);
     }
 
     // Tasks 3. End a timer
@@ -64,7 +64,7 @@ contract AboutTimer {
         delete sellerTask[msg.sender];
         emit FinalizedTask(task.buyer, msg.sender, task.flowRate);
         // end time is block.timestamp
-        zkBobx.deleteFlow(task.buyer, msg.sender);
+        BOBx.deleteFlow(task.buyer, msg.sender);
     }
 
     function verifySignature(
