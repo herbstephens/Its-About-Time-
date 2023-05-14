@@ -31,4 +31,4 @@
 
 ## Contact
 We welcome feedback, suggestions, and collaborations. Feel free to contact us!
-(Contact information)
+herbstephens.wallet@ud.me
