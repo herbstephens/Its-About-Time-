@@ -10,7 +10,7 @@ export default async function handler(
   if (req.method === "POST") {
     // JSON parse req.body
     const body = JSON.parse(req.body);
-    const { rate, jobTitle, address } = body;
+    const { rate, jobTitle, address, zkAddress } = body;
     // Check if fields are empty
     if (!rate || !jobTitle || !address) {
       console.log({ rate, jobTitle, address });
@@ -35,11 +35,15 @@ export default async function handler(
 
     // If all checks pass, store in firestore
     try {
-      await db.doc(`seller/${address}`).set({
-        rate,
-        jobTitle,
-        address,
-      });
+      await db.doc(`seller/${address}`).set(
+        {
+          rate,
+          jobTitle,
+          address,
+          zkAddress,
+        },
+        { merge: true }
+      );
       return res.status(200).json({ message: "Success" });
     } catch (error) {
       console.log(error);

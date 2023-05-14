@@ -5,6 +5,7 @@ import cookies from "next-cookies";
 import useAuth from "../../hooks/useAuth";
 import { useAccount } from "wagmi";
 import db from "../../utils/db";
+import Link from "next/link";
 
 const action = "login_action";
 const signal = "my_signal";
@@ -15,16 +16,17 @@ export async function getServerSideProps(context: any) {
   if (address) {
     const doc = await db.doc(`seller/${address}`).get();
     const seller = doc.data();
+    console.log({ seller });
     return {
       props: {
-        seller,
+        seller: seller || {},
       },
     };
   }
   return {};
 }
 
-export default function Home({ seller }: { seller: any }) {
+export default function Home({ seller }: { seller?: any }) {
   console.log({ seller });
   const { address } = useAccount();
   const { setLoggedIn, isLoggedIn } = useAuth();
@@ -43,7 +45,13 @@ export default function Home({ seller }: { seller: any }) {
     // do some logic to mark as logged in
   };
 
-  return (
+  const isKycd =
+    (address && seller && seller.isVerified && address === seller.address) ||
+    isLoggedIn;
+
+  console.log({ address, seller });
+
+  return !isKycd ? (
     <div>
       <IDKitWidget
         action="login_action"
@@ -58,9 +66,15 @@ export default function Home({ seller }: { seller: any }) {
           </button>
         )}
       </IDKitWidget>
-      {/* {/* <Link href="/sell/orders/1/edit">Order 1</Link> */}
-      {/* <h2>Create An Offer To Sell Your Time.</h2>
-      <Link href={"/sell/create"}>Create Offering</Link> */}
     </div>
+  ) : (
+    <>
+      <div>
+        <Link href="/sell/dashboard">Check your pending orders</Link>
+      </div>
+      <div>
+        <Link href="/sell/create">Create Profile</Link>
+      </div>
+    </>
   );
 }

@@ -1,26 +1,27 @@
 import type { NextPage } from "next";
+import db from "../../utils/db";
 import Profile, { ProfileProps } from "../../components/Profile";
 
-const mockProfiles: ProfileProps[] = [
-  {
-    name: "Alice",
-    picture: "https://avatars.githubusercontent.com/u/263385",
-    rateInUSD: 100,
-    address: "0x39C3b20BE76b3B39A9CD583544aE59C6A2759045",
-  },
-  {
-    name: "Bob",
-    picture: "https://avatars.githubusercontent.com/u/263385",
-    rateInUSD: 100,
-    address: "0x39C3b20BE76b3B39A9CD583544aE59C6A2759035",
-  },
-];
+export async function getServerSideProps() {
+  // rate is not null
+  const collection = await db.collection(`seller`).where("rate", ">", 0).get();
+  const profiles = collection.docs.map((doc) => ({
+    ...doc.data(),
+    _id: doc.id,
+  }));
 
-const BuyPage: NextPage = () => {
+  return {
+    props: {
+      profiles,
+    },
+  };
+}
+
+const BuyPage: NextPage = ({ profiles }: any) => {
   return (
     <div>
-      <h1>Offers</h1>
-      {mockProfiles.map((profile) => (
+      <h1>Sellers</h1>
+      {profiles.map((profile: ProfileProps) => (
         <Profile key={profile.address} {...profile} />
       ))}
     </div>

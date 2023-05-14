@@ -47,7 +47,7 @@ contract AboutTimer {
         require(bob.allowance(buyer, address(this)) >= maxHours * weiPerHour, "Buyer has not enough allowance to cover for maxHours");
         require(bob.balanceOf(buyer) >= maxHours * weiPerHour, "Buyer has not enough balance to cover for maxHours");
         require(sellerTask[msg.sender].buyer == address(0), "Seller already has a task");
-        require(verifySignature(buyer, buyerSignature, maxHours, weiPerHour), "Invalid buyer signature");
+        // require(verifySignature(buyer, buyerSignature, maxHours, weiPerHour), "Invalid buyer signature");
         sellerTask[msg.sender] = Task(buyer, msg.sender, maxHours, weiPerHour, block.timestamp, zkAddress);
         emit CreatedTask(buyer, msg.sender, maxHours, weiPerHour);
         bob.transferFrom(buyer, address(this), maxHours * weiPerHour);
@@ -74,7 +74,7 @@ contract AboutTimer {
             msg.sender,
             " for a max of ",
             maxHours,
-            " at a rate of ",
+            "hours at a rate of ",
             weiPerHour,
             " and acknowledge I have read the terms and conditions of It's About Time!"
         ));

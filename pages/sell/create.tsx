@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
+import { encodePacked } from "viem";
 
 export default function Page() {
   const { address } = useAccount();
@@ -11,7 +12,18 @@ export default function Page() {
         onSubmit={async (e) => {
           e.preventDefault();
           const formData = new FormData(e.target as HTMLFormElement);
-          const data = { ...Object.fromEntries(formData.entries()), address };
+          console.log(formData.get("zkAddress"));
+          const zkAddress = encodePacked(
+            ["string"],
+            [formData.get("zkAddress") as string]
+          );
+          const rate = Number(formData.get("rate") as string);
+          const data = {
+            ...Object.fromEntries(formData.entries()),
+            address,
+            zkAddress,
+            rate,
+          };
           console.log({ data });
           const response = await fetch("/api/seller", {
             method: "POST",
@@ -28,6 +40,10 @@ export default function Page() {
         <div>
           <label htmlFor="jobTitle">Set Job Title</label>
           <input type="text" id="jobTitle" name="jobTitle" />
+        </div>
+        <div>
+          <label htmlFor="zkAddress">Set zkAddress</label>
+          <input type="text" id="zkAddress" name="zkAddress" />
         </div>
         <input type="hidden" name="address" value={address} />
         <div>

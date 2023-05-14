@@ -54,7 +54,7 @@ contract AboutTimerTest is Test {
             seller,
             " for a max of ",
             maxHours,
-            " at a rate of ",
+            "hours at a rate of ",
             weiPerHour,
             " and acknowledge I have read the terms and conditions of It's About Time!"
         )).toEthSignedMessageHash();
