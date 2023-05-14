@@ -1,29 +1,34 @@
-This is a [RainbowKit](https://rainbowkit.com) + [wagmi](https://wagmi.sh) + [Next.js](https://nextjs.org/) project bootstrapped with [`create-rainbowkit`](https://github.com/rainbow-me/rainbowkit/tree/main/packages/create-rainbowkit).
+# It's About Time: A P2P Labor Marketplace
 
-## Getting Started
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Technologies Used & Prizes Sought For](#technologies-used--prizes-sought-for)
+4. [Contributors](#contributors)
+5. [Contact](#contact)
 
-First, run the development server:
+## Introduction
+"It's About Time" is a groundbreaking decentralized P2P labor marketplace built on the Worldcoin platform leveraging the zkBob privacy application and Polygon blockchain. It allows anyone - including bots and AI - to buy time from a real person with a Worldcoin ID. This not only adds significant value to the Worldcoin network but also brings a novel use case to the blockchain space. Additionally, we are pursuing prizes from those platforms.
 
-```bash
-npm run dev
-```
+## Features
+- Create Listings: Users can list their skills along with a set hourly rate and a detailed description of the service they provide.
+- Review and Purchase: Buyers can browse through listings and purchase services based on the listed hourly rates.
+- Worldcoin Integration: Utilizes Worldcoin's 'proof of personhood' identification protocol, ensuring a secure and decentralized user experience.
+- zkBob Integration: We leverage zkBob's Direct Deposit functionality, allowing private transactions directly to the receiver's zkBob address.
+- Secure and Cost-Effective Transactions: The marketplace benefits from the use of the Polygon blockchain, which enables fast and affordable transactions.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used & Prizes Sought For
+- **Worldcoin / World App:** Used as the 'proof of personhood' identification protocol.
+- **zkBob:** Used for secure and private stablecoin payments.
+- **Polygon:** Chosen as the blockchain of choice due to its scalability and infrastructure.
+- **Prizes:** We are actively seeking prizes from the platforms involved.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Contributors
+- Herb Stephens: Product Manager
+- Leon Brunsen: Product Designer
+- Phillip McKenna: Product Designer
+- Rafael Quintero: Full Stack Engineer
 
-## Learn More
-
-To learn more about this stack, take a look at the following resources:
-
-- [RainbowKit Documentation](https://rainbowkit.com) - Learn how to customize your wallet connection flow.
-- [wagmi Documentation](https://wagmi.sh) - Learn how to interact with Ethereum.
-- [Next.js Documentation](https://nextjs.org/docs) - Learn how to build a Next.js application.
-
-You can check out [the RainbowKit GitHub repository](https://github.com/rainbow-me/rainbowkit) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contact
+We welcome feedback, suggestions, and collaborations. Feel free to contact us!
+(Contact information)

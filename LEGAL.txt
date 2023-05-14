@@ -1,0 +1,25 @@
+THE PARTIES TO THIS AGREEMENT ARE CONTRACTING FOR ‘TEMPORARY ENGAGEMENT’.
+Limitation on Liability
+THIS PROJECT IS PART OF A HACKATHON AND WILL OPERATE ON A ‘TESTNET’.  IN NO EVENT WILL ITS CREATORS BE LIABLE FOR DAMAGES OF ANY KIND, UNDER ANY LEGAL THEORY, ARISING OUT OF OR IN CONNECTION WITH YOUR USE, OR INABILITY TO USE, THE SERVICE, ANY WEBSITES LINKED TO IT, ANY CONTENT ON THE SITE OR SUCH OTHER WEBSITES OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE SITE OR SUCH OTHER WEBSITES, INCLUDING ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO, PERSONAL INJURY, PAIN AND SUFFERING, EMOTIONAL DISTRESS, LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF BUSINESS OR ANTICIPATED SAVINGS, LOSS OF USE, LOSS OF GOODWILL, LOSS OF DATA, AND WHETHER CAUSED BY TORT (INCLUDING NEGLIGENCE), BREACH OF CONTRACT OR OTHERWISE, EVEN IF FORESEEABLE.
+
+The party hiring for temporary engagement is hereinafter referred to as "the Buyer"; the party being hired for temporary engagement is hereinafter referred to as "the Seller".
+ 1. This is NOT a permanent employment contract and under NO circumstances may it be construed as such.
+2. As per point 1 above, the Buyer is not liable to register the Seller for any statutory deductions normally related to permanent staff.
+3. The Seller is hereby notified that should any payments under this contract be considered a taxable income, such payments will be reported to the appropriate taxing authorities and is the sole responsibility of the Seller.
+4. The Seller shall perform work as requested by the Buyer either on odd days or weekends or full time and may be required to work overtime. This shall not be construed as a permanent relationship.
+5. The Seller may be required to perform work in place of another Seller on a casual or temporary basis, as a relief for the duration of the job or during the absence of such another Seller. This temporary agreement shall automatically terminate upon the return of the permanent Seller or when the job is done or should the requirements of the Buyer change.
+6. The Seller shall, at all times abide by the safety rules, regulations and working conditions of the Buyer and maintain the highest standard of professionalism and workmanship in accordance with Buyer Policy whether communicated in writing or otherwise.
+7. Should the Seller be found guilty of contravening the Buyer's Policies and Procedures, then the Seller will be disciplined accordingly and the agreement could be terminated immediately.
+8. Any and all disputes or claims between the Buyer and the Seller arising out of this contract shall be resolved by submission of the same to a private mediation council of the Buyer's choice for resolution.
+9. Should the labor requirement be reduced for any reason whatsoever, it will be at the employer's discretion as to how the work will be allocated and to whom. These decisions will be based on performance and not necessarily the length of service.
+10. The Seller will be informed in advance should his / her services be required.
+11. A time-tracking mechanism will be kept and the Seller will only be remunerated for time worked.
+12. Should the Seller wish to terminate this contract, he / she will only be entitled to receive pay for the hours that he / she has worked.
+13. Should the Seller not perform his / her duties as described and not meet the requirements and standards of the Buyer, the Buyer may terminate the contract with immediate effect and the Seller will be remunerated for the hours that he / she has worked.
+14. Should the Seller withhold his / her services for whatever reason, a principle of "no work, no pay" shall apply.
+15. The Seller agrees to perform the services as described by the Buyer.
+16. The Seller agrees to sign up for and utilize ‘World ID’ and the ‘World App’, providing the Buyer with ‘proof of personhood’ and payment methods via cryptocurrencies, including but not limited to: Polygon, Ethereum, USDC, zkBob or others as solely determined by the Buyer.
+PAYMENT:
+The Buyer shall compensate the Seller via electronic payment methods at the sole discretion of the Buyer and at a predetermined hourly rate. 
+By signing digitally via Metamask or other electronic form, the Seller certifies under the penalty of perjury that all details herein are correct.
+Acceptance by the Buyer will also be via Metamask or other electronic form, typically recorded on a public blockchain, either public or private.
