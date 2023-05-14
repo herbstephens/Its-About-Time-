@@ -1,6 +1,5 @@
 "use client";
 
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useAccount } from "wagmi";
@@ -19,7 +18,6 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <h1>Proof your time</h1>
-      <ConnectButton />
       {address && (
         <div>
           <div>

@@ -48,3 +48,7 @@ next-env.d.ts
 # forge
 out
 cache
+
+# service account
+serviceAccountKey.json
+```
