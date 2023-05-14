@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/interfaces/IERC20.sol";
 
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
+import { IZkBobDirectDeposits } from './interfaces/IZkBobDirectDeposits.sol';
+
 
 struct Task {
     address buyer;
@@ -12,6 +14,7 @@ struct Task {
     uint256 maxHours;
     uint256 weiPerHour;
     uint256 startTime;
+    bytes zkAddress;
 }
 
 /**
@@ -27,28 +30,27 @@ contract AboutTimer {
 
     using ECDSA for bytes32;
 
-
     IERC20 public bob;
+    IZkBobDirectDeposits public queue;
 
 
-    constructor(IERC20 bob_) {
+    constructor(IERC20 bob_, IZkBobDirectDeposits queue_) {
         bob = bob_;
+        queue = queue_;
+        bob.approve(address(queue), type(uint256).max);
     }
 
     mapping(address => Task) public sellerTask;
 
-    // function upsertSellerProfile(address seller, int96 flowRate) external {
-    //     sellersFlowrate[seller] = flowRate;
-    // }
-
     // Tasks 2. Create a timer
-    function startTimer(address buyer, bytes calldata buyerSignature, uint256 maxHours, uint256 weiPerHour) external {
+    function startTimer(address buyer, bytes calldata buyerSignature, uint256 maxHours, uint256 weiPerHour, bytes memory zkAddress) external {
         require(bob.allowance(buyer, address(this)) >= maxHours * weiPerHour, "Buyer has not enough allowance to cover for maxHours");
         require(bob.balanceOf(buyer) >= maxHours * weiPerHour, "Buyer has not enough balance to cover for maxHours");
         require(sellerTask[msg.sender].buyer == address(0), "Seller already has a task");
         require(verifySignature(buyer, buyerSignature, maxHours, weiPerHour), "Invalid buyer signature");
-        sellerTask[msg.sender] = Task(buyer, msg.sender, maxHours, weiPerHour, block.timestamp);
+        sellerTask[msg.sender] = Task(buyer, msg.sender, maxHours, weiPerHour, block.timestamp, zkAddress);
         emit CreatedTask(buyer, msg.sender, maxHours, weiPerHour);
+        bob.transferFrom(buyer, address(this), maxHours * weiPerHour);
     }
 
     // Tasks 3. End a timer
@@ -57,8 +59,7 @@ contract AboutTimer {
         require(task.buyer != address(0), "Seller does not have a task");
         delete sellerTask[msg.sender];
         emit FinalizedTask(task.buyer, msg.sender, block.timestamp - task.startTime, task.weiPerHour);
-        bob.transferFrom(task.buyer, msg.sender, (block.timestamp - task.startTime) * task.weiPerHour / 1 hours);
-        // end time is block.timestamp
+        queue.directDeposit(task.seller, task.maxHours * task.weiPerHour, task.zkAddress);
     }
 
     function verifySignature(

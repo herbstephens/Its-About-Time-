@@ -6,24 +6,28 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 
 import {AboutTimer} from '../src/AboutTimer.sol';
-import {ERC20Mock} from "@openzeppelin/contracts/mocks/ERC20Mock.sol";
 import {IERC20} from "@openzeppelin/contracts/interfaces/IERC20.sol";
-
+import { IZkBobDirectDeposits } from '../src/interfaces/IZkBobDirectDeposits.sol';
 
 contract AboutTimerTest is Test {
     AboutTimer aboutTimer;
-    ERC20Mock bob;
+    IERC20 bob = IERC20(0xB0B195aEFA3650A6908f15CdaC7D92F8a5791B0B);
+    IZkBobDirectDeposits queue = IZkBobDirectDeposits(0x668c5286eAD26fAC5fa944887F9D2F20f7DDF289);
     uint256 constant BUYER_PK = 1;
     address buyer;
     address constant SELLER = address(123);
+    bytes constant ZK_ADDRESS = bytes("QsnTijXekjRm9hKcq5kLNPsa6P4HtMRrc3RxVx3jsLHeo2AiysYxVJP86mz6t7k");
+
 
     using ECDSA for bytes32;
 
 
     function setUp() public {
         buyer = vm.addr(BUYER_PK);
-        bob = new ERC20Mock("Bob", "BOB", buyer, type(uint256).max);
-        aboutTimer = new AboutTimer(IERC20(bob));
+        aboutTimer = new AboutTimer(bob, queue);
+        // bob whale on polygon
+        vm.prank(0x25E6505297b44f4817538fB2d91b88e1cF841B54);
+        bob.transfer(buyer, 100 ether);
     }
 
     function testEndTimerRevertsWithNoTask() public {
@@ -32,13 +36,14 @@ contract AboutTimerTest is Test {
     }
     
     function testEndTimer() public {
+        console.logAddress(buyer);
         uint256 maxHours = 1;
         uint256 weiPerHour = 1 ether;
         vm.startPrank(buyer);
         bob.approve(address(aboutTimer), maxHours * weiPerHour);
         vm.stopPrank();
         vm.startPrank(SELLER);
-        aboutTimer.startTimer(buyer, _signMessage(SELLER, maxHours, weiPerHour, BUYER_PK), maxHours, weiPerHour);
+        aboutTimer.startTimer(buyer, _signMessage(SELLER, maxHours, weiPerHour, BUYER_PK), maxHours, weiPerHour, ZK_ADDRESS);
         aboutTimer.endTimer();
         vm.stopPrank();
     }
