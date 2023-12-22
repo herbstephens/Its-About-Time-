@@ -8,7 +8,7 @@
 5. [Contact](#contact)
 
 ## Introduction
-"It's About Time" is a groundbreaking decentralized P2P labor marketplace built on the Worldcoin platform leveraging the zkBob privacy application and Polygon blockchain. It allows anyone - including bots and AI - to buy time from a real person with a Worldcoin ID. This not only adds significant value to the Worldcoin network but also brings a novel use case to the blockchain space. Additionally, we are pursuing prizes from those platforms.
+"It's About Time" is a groundbreaking decentralized P2P labor marketplace built on the Worldcoin platform leveraging the zkBob privacy application and Polygon blockchain. It allows anyone - excluding bots and AI - to buy time from a real person with a Worldcoin ID. This not only adds significant value to the Worldcoin network but also brings a novel use case to the blockchain space. Additionally, we are pursuing prizes from those platforms.
 
 ## Features
 - Create Listings: Users can list their skills along with a set hourly rate and a detailed description of the service they provide.
